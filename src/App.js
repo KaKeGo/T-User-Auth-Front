@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Provider } from 'react-redux'
+import { Route, Routes } from 'react-router-dom'
+import Dashboard from './containers/Dashboard'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import PrivateRoutes from './hocks/PrivateRoute'
 
-export default App;
+import Home from './containers/Home'
+import Login from './containers/Login'
+import Register from './containers/Register'
+
+
+import Layout from './hocks/Layout'
+import store from './store'
+
+
+const App = () => (
+  <Provider store={store}>
+    <Layout>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        {/* <Route path='/dashboard' element={<Dashboard />} /> */}
+        <Route element={<PrivateRoutes />}>
+          <Route path='/dashboard' element={<Dashboard />}/>
+        </Route>
+      </Routes>
+    </Layout>
+  </Provider>
+)
+
+export default App
